@@ -1,0 +1,6 @@
+timm
+einops
+transformers==4.37.2
+torch
+torchvision
+gradio

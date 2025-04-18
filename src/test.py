@@ -9,7 +9,7 @@ from model_loader import ImageQAModel
 
 
 
-os.environ["GOOGLE_API_KEY"] = "AIzaSyDHcc-Mme3on7LAx0QxjxTo3M1Fp_SkCrU"  
+os.environ["GOOGLE_API_KEY"] = "....."  
 
 
 def main():

@@ -6,7 +6,7 @@ from src.utils import get_device
 from src.image_processor import load_image
 from src.model_loader import ImageQAModel
 
-GEMINI_API_KEY = "AIzaSyDHcc-Mme3on7LAx0QxjxTo3M1Fp_SkCrU"
+GEMINI_API_KEY = "......."
 
 
 def image_to_bytes(img):

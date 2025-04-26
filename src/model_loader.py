@@ -11,7 +11,7 @@ class ImageQAModel:
         self.caption = None
         gemini_api_key = gemini_api_key or os.getenv("GOOGLE_API_KEY")
         if not gemini_api_key:
-            raise ValueError("Bạn cần cung cấp Gemini API Key qua biến môi trường GOOGLE_API_KEY hoặc đối số.")
+            raise ValueError("Bạn cần cung cấp Gemini API Key")
         
         genai.configure(api_key=gemini_api_key)
         self.llm_model = genai.GenerativeModel("gemini-1.5-pro")

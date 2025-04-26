@@ -3,4 +3,9 @@ einops
 transformers==4.37.2
 torch
 torchvision
-gradio
+gradio 
+whisper
+sounddevice
+numpy
+rich
+openai-whisper

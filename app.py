@@ -2,11 +2,13 @@
 from PIL import Image
 from io import BytesIO
 import numpy as np
+from rich.console import Console
 from src.utils import get_device
 from src.image_processor import load_image
 from src.model_loader import ImageQAModel
 from src.speech_utils import SpeechProcessor
 
+console = Console()
 class ImageQASystem:
     def __init__(self, device=None, gemini_api_key=None, language="vi"):
         self.device = device or get_device()
@@ -27,11 +29,13 @@ class ImageQASystem:
             caption = self.model.generate_caption(pixel_values)
 
         return caption, img
-
-    def answer_question(self, question): 
+    def answer_question(self, question):
         if self.current_image is None:
-            return "Vui lòng tải ảnh lên trước!"
-        return self.model.answer_question(question)
+            return "Vui lòng tải ảnh trước khi đặt câu hỏi."
+        
+        with console.status("[cyan]Đang xử lý câu trả lời...", spinner="dots"):
+            answer = self.model.answer_question(question)
+        return answer
     
     def record_and_transcribe(self, duration=5): 
         if self.current_image is None:

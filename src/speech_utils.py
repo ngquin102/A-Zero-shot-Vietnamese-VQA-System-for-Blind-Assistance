@@ -10,12 +10,10 @@ import os
 from pydub import AudioSegment 
 from pydub.playback import play
 import io
-from rich.console import Console
 import sys
 from PIL import Image
 from io import BytesIO
 
-# Thêm thư mục gốc vào path để import các module
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 GEMINI_API_KEY = "............"
 from src.image_processor import load_image
@@ -71,13 +69,6 @@ class SpeechProcessor:
             text = result["text"].strip()
         return text
     
-    def answer_question(self, question):
-        if self.current_image is None:
-            return "Vui lòng tải ảnh trước khi đặt câu hỏi."
-        
-        with console.status("[cyan]Đang xử lý câu trả lời...", spinner="dots"):
-            answer = self.model.answer_question(question)
-        return answer
     
     def text_to_speech(self, text):
         with console.status("[cyan]Đang chuyển đổi thành giọng nói...", spinner="dots"):

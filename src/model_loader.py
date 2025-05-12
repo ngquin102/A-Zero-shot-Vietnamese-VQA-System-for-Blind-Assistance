@@ -2,14 +2,18 @@ import torch
 import os
 from transformers import AutoModel, AutoTokenizer
 import google.generativeai as genai
+from dotenv import load_dotenv
+# Đọc biến môi trường từ file .env
+load_dotenv()
 
+gemini_api_key = os.getenv("GEMINI_API_KEY")
 class ImageQAModel:
-    def __init__(self, device='cpu', gemini_api_key=None):
+    def __init__(self, device='cpu', gemini_api_key=gemini_api_key):
         self.device = device
         self.vision_model = None
         self.vision_tokenizer = None
         self.caption = None
-        gemini_api_key = gemini_api_key or os.getenv("GOOGLE_API_KEY")
+        gemini_api_key = gemini_api_key 
         if not gemini_api_key:
             raise ValueError("Bạn cần cung cấp Gemini API Key")
         
@@ -42,7 +46,7 @@ class ImageQAModel:
             raise ValueError("Vision model not loaded. Call load_vision_model() first.")
 
         generation_config = dict(max_new_tokens=512, do_sample=False, num_beams=2, repetition_penalty=3.5)
-        question = "<image>\nTrích xuất toàn bộ thông tin trong ảnh"
+        question = "<image>\nMô tả chi tiết hình ảnh và trích xuất toàn bộ thông tin có trong ảnh"
 
         pixel_values = pixel_values.to(self.device)
         if pixel_values.dtype != torch.float32:
@@ -57,7 +61,7 @@ class ImageQAModel:
         if self.caption is None:
             raise ValueError("No caption available. Process an image first.")
 
-        prompt = f"""Văn bản từ hình ảnh: {self.caption}\nCâu hỏi: {question}\nTrả lời:"""
+        prompt = f"""Văn bản từ hình ảnh: {self.caption}\nCâu hỏi: {question}\nTrả lời câu hỏi ngắn gọn:"""
 
         response = self.llm_model.generate_content(prompt)
         return response.text.strip()

@@ -12,10 +12,12 @@ from src.image_processor import load_image
 from src.model_loader import ImageQAModel
 from app import ImageQASystem
 from src.speech_utils import SpeechProcessor 
-
-
-GEMINI_API_KEY = "..............."  
-qa_system = ImageQASystem(gemini_api_key=GEMINI_API_KEY)
+from rich.console import Console
+from dotenv import load_dotenv
+load_dotenv()
+console = Console()
+gemini_api_key = os.getenv("GEMINI_API_KEY") 
+qa_system = ImageQASystem(gemini_api_key=gemini_api_key)
 
 def create_demo():
     with gr.Blocks() as demo:

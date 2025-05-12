@@ -13,19 +13,21 @@ import io
 import sys
 from PIL import Image
 from io import BytesIO
-
+from rich.console import Console
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-GEMINI_API_KEY = "............"
 from src.image_processor import load_image
 from src.model_loader import ImageQAModel
 from src.utils import get_device
+from dotenv import load_dotenv
+load_dotenv()
 
+gemini_api_key = os.getenv("GEMINI_API_KEY")
 console = Console()
 class SpeechProcessor:
     def __init__(self, language="vi"):
         self.language = language
         self.device = get_device()
-        self.model = ImageQAModel(device=self.device, gemini_api_key=GEMINI_API_KEY)
+        self.model = ImageQAModel(device=self.device, gemini_api_key=gemini_api_key)
         self.model.load_vision_model()
 
         console.print("[green]Đang tải mô hình Whisper large-v3 ....")
